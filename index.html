@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +10,37 @@
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
-  <header>
+
+<body class="bottom-color">
+  <header class="top-color">
+    <div class="container top-color">
+      <div class="nav row ">
+        <div class="column-half ">
+          <a href="#" class="big-mango">Manga</a>
+          <a href="#" class="small-mango">Manga List</a>
+          <a href="#" class="small-mango">Favorites</a>
+        </div>
+      </div>
+    </div>
   </header>
   <main>
+    <div class="container">
+      <div data-view="manga-view">
+        <h1>Browse The Highest Rated Manga</h1>
+        <input type="text" placeholder="Search">
+        <div class="all-manga"></div>
+      </div>
+
+      <div data-view="mang-list-view" class="hidden">
+
+      </div>
+      <div data-view="Favorites" class="hidden">
+
+      </div>
+    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
 </body>
+
 </html>

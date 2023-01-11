@@ -1,0 +1,27 @@
+a {
+  text-decoration: none;
+  color: white;
+  margin: 20px;
+  cursor: pointer;
+}
+
+.nav {
+  margin: 0;
+  text-align: center;
+}
+
+.top-color {
+  background-color: #d0b8a8;
+}
+
+.bottom-color {
+  background-color: #faeadd;
+}
+
+.big-mango {
+  font-size: large;
+}
+
+.small-mango {
+  color: white;
+}
