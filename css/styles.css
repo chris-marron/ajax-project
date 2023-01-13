@@ -25,3 +25,20 @@ a {
 .small-mango {
   color: white;
 }
+
+li {
+  list-style: none;
+}
+
+img {
+  width: 50px;
+}
+
+.start-left ul li {
+  float: left;
+  width: 50%;
+}
+
+.hidden {
+  display: none;
+}
