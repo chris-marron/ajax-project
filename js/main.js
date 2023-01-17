@@ -15,12 +15,15 @@ function apiList(result) {
   xhr.send();
 }
 
-apiList('Berserk');
-function input(e) {
-  // var value = e.target.value;
-  // console.log(apiList(value));
+function oneTwo(e) {
+  var value = e.target.value;
+  if (value.length > 0) {
+    // console.log(value);
+    apiList(value);
+  }
+
 }
-$searchInput.addEventListener('input', input);
+$searchInput.addEventListener('input', oneTwo);
 
 function renderTree(result) {
   var $li = document.createElement('li');
@@ -45,9 +48,15 @@ function clearList(ok) {
 clearButton.addEventListener('click', clearList);
 
 function domReload(data) {
-
   for (var i = 0; i < data.length; i++) {
-    var wow = renderTree(data[i]);
+
+    var wow = data[i].title;
+    if (wow) {
+      renderTree(data[i]);
+    } // else {
+
+    // }
+
   }
   return wow;
 }
