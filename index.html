@@ -27,10 +27,13 @@
     <div class="container">
       <div data-view="manga-view">
         <h1>Browse The Highest Rated Manga</h1>
-        <form class="form">
-          <input id="search" type="search" placeholder="Search" class="input">
-          <button class="clear-search" type="button">clear</button>
-        </form>
+        <div>
+          <form class="form">
+            <input id="search" type="text" placeholder="Search" class="input">
+            <button type="submit" class="search-button">Search</button>
+            <button class="clear-search" type="button">Clear</button>
+          </form>
+        </div>
         <div class="row start-left">
           <ul class="all-manga column-half" id="list"></ul>
         </div>
