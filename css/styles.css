@@ -28,15 +28,28 @@ a {
 
 li {
   list-style: none;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 10px black;
+}
+
+li > h3 {
+  font-size: 12px;
+  text-align: center;
 }
 
 img {
   width: 50px;
 }
 
-.start-left ul li {
-  float: left;
-  width: 50%;
+ul li {
+  /* float: left; */
+  width: 100%;
+  margin-bottom: 10px;
+  padding-left: 0;
+  justify-content: left;
+  align-items: flex-end;
+  text-align: left;
 }
 
 .hidden {

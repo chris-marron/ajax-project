@@ -2,42 +2,62 @@ var $ulManga = document.querySelector('.all-manga');
 var $searchInput = document.querySelector('.input');
 // var $searchButton = document.querySelector('.search-button');
 var clearButton = document.querySelector('.clear-search');
-var $form = document.querySelector('form');
-function apiList() {
+// var $form = document.querySelector('form');
+function apiList(eve) {
   var value = $searchInput.value.toLowerCase();
   // console.log(value);
 
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.jikan.moe/v4/top/manga?q=$' + value);
   xhr.responseType = 'json';
-  xhr.addEventListener('load', function (e) {
-    var apiObj = xhr.response.data;
-    dataLoop(apiObj);
-    // var sack = document.querySelectorAll('li');
-    // for (var i = 0; i < sack.length; i++) {
-    //   var sackH3 = sack[i].querySelectorAll('h3')[0];
-    //   var txt = sackH3.textContent;
-    //   console.log(sackH3);
-    //   if (txt.toLowerCase().indexOf(value) > -1) {
-    //     sack[i].setAttribute('class', 'go');
-
-    //   } else {
-    //     sack[i].remove();
-    //   }
-    // }
-    // renderTree(value, apiObj);
-  });
+  function tryO(e) {
+    if (value === '') {
+      dataLoop(xhr.response.data);
+      var $rli = document.querySelectorAll('.go');
+      for (var i = 0; i < $rli.length; i++) {
+        var ok = $rli[i].remove();
+      }
+      return ok;
+    } else {
+      search(value);
+    }
+  }
+  xhr.addEventListener('load', tryO);
 
   xhr.send();
 
 }
-// $searchInput.addEventListener('input', apiList);
+$searchInput.addEventListener('input', apiList);
 
-$form.addEventListener('submit', function (eve) {
-  eve.preventDefault();
+// $form.addEventListener('submit', function (eve) {
+//   eve.preventDefault();
+//   console.log(eve.target);
+// });
 
-  $searchInput.addEventListener('input', apiList);
-});
+function search(value) {
+  if (value === '') {
+    return;
+  }
+  // var change = document.querySelectorAll('h3');
+  var sack = document.querySelectorAll('li');
+  for (var i = 0; i < sack.length; i++) {
+
+    var sackH3 = sack[i].querySelectorAll('h3')[0];
+
+    var txt = sackH3.textContent;
+    if (txt.toLowerCase().includes(value) && value.length > 0) {
+      sack[i].setAttribute('class', 'go');
+
+    } else {
+      sack[i].remove();
+    }
+  }
+  for (var j = 0; j < data.length; j++) {
+    var wow = renderAll(data[j]);
+  }
+  return wow;
+
+}
 
 function clearList(ok) {
   while ($ulManga.firstChild) {
@@ -47,28 +67,14 @@ function clearList(ok) {
 }
 clearButton.addEventListener('click', clearList);
 
-// function renderTree(value, obj) {
-//   for (var q = 0; q < obj.length; q++) {
-//     if (value && value.trim() === obj[q].title.toLowerCase()) {
-//       var $li = document.createElement('li');
-//       var newTitle = document.createElement('h3');
-//       newTitle.textContent = obj[q].title;
-//       $li.appendChild(newTitle);
-//       var newImg = document.createElement('img');
-//       newImg.setAttribute('src', obj[q].images.jpg.image_url);
-//       $li.prepend(newImg);
-//       $ulManga.appendChild($li);
-//     }
-//   }
-// }
 function renderAll(result) {
   var $li = document.createElement('li');
+  var newImg = document.createElement('img');
   var newTitle = document.createElement('h3');
   newTitle.textContent = result.title;
-  $li.appendChild(newTitle);
-  var newImg = document.createElement('img');
   newImg.setAttribute('src', result.images.jpg.image_url);
   $li.prepend(newImg);
+  $li.appendChild(newTitle);
   $ulManga.appendChild($li);
 
   return $ulManga;
