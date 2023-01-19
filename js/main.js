@@ -49,7 +49,7 @@ function search(value) {
       sack[i].setAttribute('class', 'go');
 
     } else {
-      sack[i].remove();
+      sack[i].setAttribute('class', 'hidden');
     }
   }
   for (var j = 0; j < data.length; j++) {
