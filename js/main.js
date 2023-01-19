@@ -1,11 +1,8 @@
 var $ulManga = document.querySelector('.all-manga');
 var $searchInput = document.querySelector('.input');
-// var $searchButton = document.querySelector('.search-button');
 var clearButton = document.querySelector('.clear-search');
-// var $form = document.querySelector('form');
 function apiList(eve) {
   var value = $searchInput.value.toLowerCase();
-  // console.log(value);
 
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.jikan.moe/v4/top/manga?q=$' + value);
@@ -13,11 +10,13 @@ function apiList(eve) {
   function tryO(e) {
     if (value === '') {
       dataLoop(xhr.response.data);
-      var $rli = document.querySelectorAll('.go');
+      var $rli = document.querySelectorAll('li');
       for (var i = 0; i < $rli.length; i++) {
-        var ok = $rli[i].remove();
+        if (!$rli[i].matches('.active')) {
+          $rli[i].remove();
+        }
       }
-      return ok;
+
     } else {
       search(value);
     }
@@ -29,16 +28,10 @@ function apiList(eve) {
 }
 $searchInput.addEventListener('input', apiList);
 
-// $form.addEventListener('submit', function (eve) {
-//   eve.preventDefault();
-//   console.log(eve.target);
-// });
-
 function search(value) {
   if (value === '') {
     return;
   }
-  // var change = document.querySelectorAll('h3');
   var sack = document.querySelectorAll('li');
   for (var i = 0; i < sack.length; i++) {
 
@@ -72,6 +65,7 @@ function renderAll(result) {
   var newImg = document.createElement('img');
   var newTitle = document.createElement('h3');
   newTitle.textContent = result.title;
+  $li.classList.add('active');
   newImg.setAttribute('src', result.images.jpg.image_url);
   $li.prepend(newImg);
   $li.appendChild(newTitle);
