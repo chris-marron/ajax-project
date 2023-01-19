@@ -1,6 +1,8 @@
 var $ulManga = document.querySelector('.all-manga');
 var $searchInput = document.querySelector('.input');
 var clearButton = document.querySelector('.clear-search');
+var anchor = document.querySelector('#main-page');
+
 function apiList(eve) {
   var value = $searchInput.value.toLowerCase();
 
@@ -11,12 +13,14 @@ function apiList(eve) {
     if (value === '') {
       dataLoop(xhr.response.data);
       var $rli = document.querySelectorAll('li');
-
       for (var i = 0; i < $rli.length; i++) {
         $rli[i].addEventListener('click', function (e) {
-          // console.log(e.target);
-          renderMangaInfo();
+          if (e.target.matches('.swap')) {
+            viewSwap('manga-list-view');
+            renderMangaInfo();
+          }
         });
+
         if (!$rli[i].matches('.active')) {
           $rli[i].remove();
         }
@@ -71,6 +75,7 @@ function renderAll(result) {
   var newTitle = document.createElement('h3');
   newTitle.textContent = result.title;
   $li.classList.add('active');
+  newTitle.classList.add('swap');
   newImg.setAttribute('src', result.images.jpg.image_url);
   $li.prepend(newImg);
   $li.appendChild(newTitle);
@@ -119,13 +124,18 @@ function renderMangaInfo(domTree) {
 var $viewList = document.querySelectorAll('[data-view]');
 function viewSwap(view) {
   for (var i = 0; i < $viewList.length; i++) {
-    var viewList = $viewList[i].getAttribute('data-view');
-    if (viewList === view) {
-      viewList.clasName = 'on';
+    if ($viewList[i].getAttribute('data-view') === view) {
+      $viewList[i].className = 'on';
     } else {
-      viewList.clasName = 'hidden';
+      $viewList[i].className = 'hidden';
     }
   }
 }
-viewSwap();
+function currentView(eve) {
+  if (eve.target.matches('#main-page')) {
+    viewSwap('manga-view');
+  }
+}
+anchor.addEventListener('click', currentView);
+
 apiList();
