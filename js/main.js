@@ -11,7 +11,12 @@ function apiList(eve) {
     if (value === '') {
       dataLoop(xhr.response.data);
       var $rli = document.querySelectorAll('li');
+
       for (var i = 0; i < $rli.length; i++) {
+        $rli[i].addEventListener('click', function (e) {
+          // console.log(e.target);
+          renderMangaInfo();
+        });
         if (!$rli[i].matches('.active')) {
           $rli[i].remove();
         }
@@ -79,5 +84,48 @@ function dataLoop(data) {
   }
   return wow;
 }
-
+var $divPic = document.querySelector('.info-view');
+function renderMangaInfo(domTree) {
+  var divCol = document.createElement('div');
+  divCol.classList.add('column-half');
+  var divCol2 = document.createElement('div');
+  divCol2.classList.add('column-half');
+  var imgCre = document.createElement('img');
+  var title = document.createElement('h2');
+  // var genres = document.createElement('h4');
+  var score = document.createElement('h4');
+  var published = document.createElement('h4');
+  var chapters = document.createElement('h4');
+  var $syn = document.createElement('h4');
+  // var $syntxt = document.createElement('span');
+  imgCre.setAttribute('src', domTree.images.jpg.image_url);
+  imgCre.classList.add('info-img');
+  title.textContent = domTree.title;
+  title.classList.add('info-h2');
+  score.textContent = `MAL score: ${domTree.score}`;
+  score.classList.add('info-h4');
+  published.textContent = `Published: ${domTree.published.string}`;
+  published.classList.add('info-h4');
+  chapters.textContent = domTree.chapters;
+  chapters.classList.add('info-h4');
+  $syn.textContent = `Synopsis: ${domTree.synopsis}`;
+  divCol.prepend(imgCre);
+  divCol.append(title, score, published, chapters);
+  divCol2.prepend($syn);
+  $divPic.prepend(divCol);
+  $divPic.append(divCol2);
+  return $divPic;
+}
+var $viewList = document.querySelectorAll('[data-view]');
+function viewSwap(view) {
+  for (var i = 0; i < $viewList.length; i++) {
+    var viewList = $viewList[i].getAttribute('data-view');
+    if (viewList === view) {
+      viewList.clasName = 'on';
+    } else {
+      viewList.clasName = 'hidden';
+    }
+  }
+}
+viewSwap();
 apiList();
