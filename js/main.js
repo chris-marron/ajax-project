@@ -19,7 +19,7 @@ function apiList(eve) {
           if (e.target.matches('.swap')) {
             viewSwap('mang-list-view');
             for (var j = 0; j < xhr.response.data.length; j++) {
-              if (xhr.response.data[j].title.includes(e.target.textContent)) {
+              if (xhr.response.data[j].title === (e.target.textContent)) {
                 // console.log();
                 renderMangaInfo(xhr.response.data[j]);
               }
@@ -101,16 +101,19 @@ var $divPic = document.querySelector('.info-view');
 function renderMangaInfo(domTree) {
   var divCol = document.createElement('div');
   divCol.classList.add('column-half');
+  divCol.classList.add('viewing');
   var divCol2 = document.createElement('div');
   divCol2.classList.add('column-half');
+  divCol2.classList.add('viewing');
   var imgCre = document.createElement('img');
   var title = document.createElement('h2');
-  // var genres = document.createElement('h4');
+  var genres = document.createElement('h4');
   var score = document.createElement('h4');
   var published = document.createElement('h4');
   var chapters = document.createElement('h4');
   var $syn = document.createElement('h4');
-  // var $syntxt = document.createElement('span');
+  genres.classList.add('info-h4');
+  genres.textContent = `Genres: ${genresOk(domTree.genres)}`;
   imgCre.setAttribute('src', domTree.images.jpg.image_url);
   imgCre.classList.add('info-img');
   title.textContent = domTree.title;
@@ -125,7 +128,7 @@ function renderMangaInfo(domTree) {
   $syn.classList.add('info-h4');
   $syn.classList.add('info-syn');
   divCol.prepend(imgCre);
-  divCol.append(title, score, published, chapters);
+  divCol.append(title, genres, score, published, chapters);
   divCol2.prepend($syn);
   $divPic.prepend(divCol);
   $divPic.append(divCol2);
@@ -141,14 +144,25 @@ function viewSwap(view) {
     }
   }
 }
-// var test = document.querySelector('#oneTwo');
-
+var moreInfo = document.querySelector('.info-view');
 function currentView(eve) {
   if (eve.target.matches('#main-page')) {
     viewSwap('manga-view');
+    while (moreInfo.firstChild) {
+      moreInfo.removeChild(moreInfo.firstChild);
+    }
   }
 
 }
 anchor.addEventListener('click', currentView);
+function genresOk(gene) {
+  var names = '';
+  for (var i = 0; i < gene.length; i++) {
+    names = `${names}, ${gene[i].name}`;
+  }
+  names = names.substring(2);
+
+  return names;
+}
 
 apiList();
