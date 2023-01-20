@@ -15,9 +15,15 @@ function apiList(eve) {
       var $rli = document.querySelectorAll('li');
       for (var i = 0; i < $rli.length; i++) {
         $rli[i].addEventListener('click', function (e) {
+
           if (e.target.matches('.swap')) {
-            viewSwap('manga-list-view');
-            renderMangaInfo();
+            viewSwap('mang-list-view');
+            for (var j = 0; j < xhr.response.data.length; j++) {
+              if (xhr.response.data[j].title.includes(e.target.textContent)) {
+                // console.log();
+                renderMangaInfo(xhr.response.data[j]);
+              }
+            }
           }
         });
 
@@ -83,12 +89,14 @@ function renderAll(result) {
 
   return $ulManga;
 }
+
 function dataLoop(data) {
   for (var i = 0; i < data.length; i++) {
     var wow = renderAll(data[i]);
   }
   return wow;
 }
+
 var $divPic = document.querySelector('.info-view');
 function renderMangaInfo(domTree) {
   var divCol = document.createElement('div');
@@ -114,6 +122,8 @@ function renderMangaInfo(domTree) {
   chapters.textContent = domTree.chapters;
   chapters.classList.add('info-h4');
   $syn.textContent = `Synopsis: ${domTree.synopsis}`;
+  $syn.classList.add('info-h4');
+  $syn.classList.add('info-syn');
   divCol.prepend(imgCre);
   divCol.append(title, score, published, chapters);
   divCol2.prepend($syn);
@@ -131,10 +141,13 @@ function viewSwap(view) {
     }
   }
 }
+// var test = document.querySelector('#oneTwo');
+
 function currentView(eve) {
   if (eve.target.matches('#main-page')) {
     viewSwap('manga-view');
   }
+
 }
 anchor.addEventListener('click', currentView);
 
